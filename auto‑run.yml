@@ -1,0 +1,19 @@
+name: Auto refresh source
+on:
+  schedule:
+    - cron: "0 16 */1 * *" # UTC时间，每日国内0点执行一次
+  push:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run script
+        run: python3 merge.py
+      - name: Push changes
+        run: |
+          git config --global user.name "robot"
+          git config --global user.email "robot@no.com"
+          git add tv.json
+          git commit -m "auto update" || true
+          git push
