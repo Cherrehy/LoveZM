@@ -7,10 +7,8 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# 仅保留全球可访问的CDN地址
 source_list = [
-    "https://fastly.jsdelivr.net/gh/liu673cn/box@main/m.json",
-    "https://fastly.jsdelivr.net/gh/smiek/TVbox/main/tv.json"
+    "https://fastly.jsdelivr.net/gh/liu673cn/box@main/m.json"
 ]
 
 final_data = {"sites": [], "lives": []}
@@ -31,9 +29,10 @@ for url in source_list:
                 live_set.add(live_url)
                 final_data["lives"].append(live)
     except Exception as err:
-        print(f"访问失败：{url}，错误信息：{str(err)}")
+        print(err)
 
 with open("tv.json", "w", encoding="utf-8") as f:
+    json.dump(final_data, f, ensure_ascii=False)
     json.dump(final_data, f, ensure_ascii=False)
 with open("tv.json", "w", encoding="utf-8") as f:
     json.dump(final_data, f, ensure_ascii=False)
